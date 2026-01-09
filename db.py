@@ -9,7 +9,11 @@ from bson import ObjectId
 logging.basicConfig(level=logging.INFO)
 
 # MongoDB ulanish
+<<<<<<< HEAD
 MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://mongo:qJwpnbIGiqXcvjGhsMOhyPWJHzpmmnbV@shortline.proxy.rlwy.net:39174')
+=======
+MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://mongo:WpuAhSmRhlVZcVWaWvdqrxuxXwHkXsNT@mongodb.railway.internal:27017')
+>>>>>>> 4312d61506625114b15471b398948ea71f881ddb
 DATABASE_NAME = os.getenv('DATABASE_NAME', 'garajhub')
 
 client = MongoClient(MONGODB_URI, serverSelectionTimeoutMS=5000)
@@ -617,6 +621,7 @@ def check_database_connection() -> bool:
 
 # =========== INITIALIZE DATABASE ===========
 
+<<<<<<< HEAD
 if __name__ == "__main__":
     print("Initializing database...")
     if check_database_connection():
@@ -624,3 +629,56 @@ if __name__ == "__main__":
         print("✅ Database initialized successfully")
     else:
         print("❌ Database connection failed")
+=======
+def get_completed_startups(page: int = 1, per_page: int = 5) -> Tuple[List[Dict], int]:
+    """Yakunlangan startuplar"""
+    try:
+        skip = (page - 1) * per_page
+        total = db[STARTUPS_COLLECTION].count_documents({'status': 'completed'})
+        
+        startups = list(db[STARTUPS_COLLECTION].find(
+            {'status': 'completed'}
+        ).sort('created_at', DESCENDING).skip(skip).limit(per_page))
+        
+        for startup in startups:
+            if '_id' in startup:
+                startup['_id'] = str(startup['_id'])
+                startup['startup_id'] = str(startup['_id'])
+        
+        return startups, total
+    except Exception as e:
+        logging.error(f"Error getting completed startups: {e}")
+        return [], 0
+
+def get_rejected_startups(page: int = 1, per_page: int = 5) -> Tuple[List[Dict], int]:
+    """Rad etilgan startuplar"""
+    try:
+        skip = (page - 1) * per_page
+        total = db[STARTUPS_COLLECTION].count_documents({'status': 'rejected'})
+        
+        startups = list(db[STARTUPS_COLLECTION].find(
+            {'status': 'rejected'}
+        ).sort('created_at', DESCENDING).skip(skip).limit(per_page))
+        
+        for startup in startups:
+            if '_id' in startup:
+                startup['_id'] = str(startup['_id'])
+                startup['startup_id'] = str(startup['_id'])
+        
+        return startups, total
+    except Exception as e:
+        logging.error(f"Error getting rejected startups: {e}")
+        return [], 0
+
+def get_all_startup_members(startup_id: str) -> List[int]:
+    """Startupning barcha a'zolari (faqat user_id lar)"""
+    try:
+        members = db[STARTUP_MEMBERS_COLLECTION].find(
+            {'startup_id': startup_id, 'status': 'accepted'},
+            {'user_id': 1}
+        )
+        return [member['user_id'] for member in members]
+    except Exception as e:
+        logging.error(f"Error getting all startup members {startup_id}: {e}")
+        return []
+>>>>>>> 4312d61506625114b15471b398948ea71f881ddb
