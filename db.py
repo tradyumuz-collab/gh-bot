@@ -9,7 +9,7 @@ from bson import ObjectId
 logging.basicConfig(level=logging.INFO)
 
 # MongoDB ulanish
-MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://mongo:eliYeOpQBDioVkZLWLHJauOnLJcFZacw@metro.proxy.rlwy.net:30022')
+MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://mongo:WpuAhSmRhlVZcVWaWvdqrxuxXwHkXsNT@mongodb.railway.internal:27017')
 DATABASE_NAME = os.getenv('DATABASE_NAME', 'garajhub')
 
 client = MongoClient(MONGODB_URI)
