@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO)
 
 # MongoDB ulanish
 <<<<<<< HEAD
-MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://mongo:qJwpnbIGiqXcvjGhsMOhyPWJHzpmmnbV@shortline.proxy.rlwy.net:39174')
+MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://mongo:WpuAhSmRhlVZcVWaWvdqrxuxXwHkXsNT@mongodb.railway.internal:27017')
 =======
 MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://mongo:WpuAhSmRhlVZcVWaWvdqrxuxXwHkXsNT@mongodb.railway.internal:27017')
 >>>>>>> 4312d61506625114b15471b398948ea71f881ddb
